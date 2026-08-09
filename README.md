@@ -24,83 +24,6 @@
 
 ---
 
-## 📦 获取方式
-
-### 方式1：URL引用（推荐，最简洁）
-
-直接告诉你的 Agent：
-
-> 请使用战略调研框架：https://github.com/tea-del/strategic-opportunity-insight
-> 
-> 读取 `SKILL.md` 作为执行指令，`scripts/strategy_matrix.html` 用于生成可视化矩阵
-
-Agent 会自动读取仓库内容并开始引导。
-
-### 方式2：复制粘贴（最稳定）
-
-1. 复制 [`SKILL.md`](./SKILL.md) 的全部内容
-2. 粘贴到你的 Agent 的系统提示词（System Prompt / Instructions）中
-3. 复制 [`scripts/strategy_matrix.html`](./scripts/strategy_matrix.html) 的内容附上（用于可视化输出）
-4. （可选）将 `references/` 下的文件作为补充知识库
-
-### 各平台适配参考
-
-| 平台 | 操作方式 |
-|------|---------|
-| ChatGPT GPTs | SKILL.md → Instructions；references/ → Knowledge |
-| Claude Projects | SKILL.md → Project Instructions；references/ → Knowledge |
-| Claude Code | SKILL.md 放入项目目录，说"读取 SKILL.md 开始调研" |
-| Dify | SKILL.md → Prompt 模板；references/ → 知识库 |
-| Coze | 可使用 Releases 中的 `.skill` 打包文件 |
-| 其他 Agent | SKILL.md → System Prompt |
-
-> **要求：** AI Agent 需支持联网搜索和网页阅读，建议使用能力较强的大模型。
-
----
-
-## 🚀 第一次使用
-
-在你的 Agent 对话中说：
-
-```
-开始战略机会调研
-```
-
-或
-
-```
-帮我调研 [某某行业] 的战略机会
-```
-
-Agent 会启动 **Phase 0：调研启动**，进行 3 轮共 15 题结构化 Q&A（约 30 分钟）：
-
-| 轮次 | 内容 | 题目数 |
-|------|------|--------|
-| 第1轮 | 组织构成（人数、角色、技能、投入时间等） | 6题 |
-| 第2轮 | 产品与技术（产品阶段、用户数、技术栈等） | 4题 |
-| 第3轮 | 资源与渠道（资金、渠道、协作方式、调研方向） | 5题 |
-
-回答完成后，Agent 自动进入调研流程。
-
----
-
-## ⚡ 调研流程
-
-五阶段递进式调研——前四看强制纯客观，所有数据标注来源链接。
-
-| 阶段 | 名称 | 方法论 | 维度 | 产出 |
-|:----:|------|--------|:----:|------|
-| Phase 0 | 调研启动 | 结构化 Q&A | 3轮15题 | 组织信息 + 调研方案 |
-| 第一看 | 看趋势 | PEST 分析 | 7维 | 行业趋势简报 |
-| 第二看 | 看客户市场 | 市场细分 | 5维 | 客户市场简报 |
-| 第三看 | 看对手 | 波特五力 | 6维 | 竞争格局简报 |
-| 第四看 | 看自己 | VRIO 框架 | 4维 | 内部能力盘点 |
-| 第五看 | 看机会 | 波士顿/GE 矩阵 | 5个Phase | 机会扫描→深描→评分→矩阵→验证→汇总 |
-
-**预计耗时：** 2-3天（含调研+评估全流程）
-
----
-
 ## 🧩 核心设计
 
 **市场优先** — 强制前四看纯客观，不被自身业务框住
@@ -129,6 +52,23 @@ Agent 会启动 **Phase 0：调研启动**，进行 3 轮共 15 题结构化 Q&A
 
 ---
 
+## ⚡ 调研流程
+
+五阶段递进式调研——前四看强制纯客观，所有数据标注来源链接。
+
+| 阶段 | 名称 | 方法论 | 维度 | 产出 |
+|:----:|------|--------|:----:|------|
+| Phase 0 | 调研启动 | 结构化 Q&A | 3轮15题 | 组织信息 + 调研方案 |
+| 第一看 | 看趋势 | PEST 分析 | 7维 | 行业趋势简报 |
+| 第二看 | 看客户市场 | 市场细分 | 5维 | 客户市场简报 |
+| 第三看 | 看对手 | 波特五力 | 6维 | 竞争格局简报 |
+| 第四看 | 看自己 | VRIO 框架 | 4维 | 内部能力盘点 |
+| 第五看 | 看机会 | 波士顿/GE 矩阵 | 5个Phase | 机会扫描→深描→评分→矩阵→验证→汇总 |
+
+**预计耗时：** 2-3天（含调研+评估全流程）
+
+---
+
 ## 📦 交付物清单（11份）
 
 | 类型 | 数量 | 内容 |
@@ -145,6 +85,66 @@ Agent 会启动 **Phase 0：调研启动**，进行 3 轮共 15 题结构化 Q&A
 5. 战略矩阵可视化（文本版表格 + HTML 交互图）
 6. 风险与注意事项
 7. 附录索引（前10份交付物链接）
+
+---
+
+## 🚀 快速开始
+
+### 获取方式
+
+**方式1：URL引用（推荐，最简洁）**
+
+直接告诉你的 Agent：
+
+> 请使用战略调研框架：https://github.com/tea-del/strategic-opportunity-insight
+> 
+> 读取 `SKILL.md` 作为执行指令，`scripts/strategy_matrix.html` 用于生成可视化矩阵
+
+Agent 会自动读取仓库内容并开始引导。
+
+**方式2：复制粘贴（最稳定）**
+
+1. 复制 [`SKILL.md`](./SKILL.md) 的全部内容
+2. 粘贴到你的 Agent 的系统提示词（System Prompt / Instructions）中
+3. 复制 [`scripts/strategy_matrix.html`](./scripts/strategy_matrix.html) 的内容附上（用于可视化输出）
+4. （可选）将 `references/` 下的文件作为补充知识库
+
+### 第一次使用
+
+在你的 Agent 对话中说：
+
+```
+开始战略机会调研
+```
+
+或
+
+```
+帮我调研 [某某行业] 的战略机会
+```
+
+Agent 会启动 **Phase 0：调研启动**，进行 3 轮共 15 题结构化 Q&A（约 30 分钟）：
+
+| 轮次 | 内容 | 题目数 |
+|------|------|--------|
+| 第1轮 | 组织构成（人数、角色、技能、投入时间等） | 6题 |
+| 第2轮 | 产品与技术（产品阶段、用户数、技术栈等） | 4题 |
+| 第3轮 | 资源与渠道（资金、渠道、协作方式、调研方向） | 5题 |
+
+回答完成后，Agent 自动进入调研流程。
+
+### 各平台适配参考
+
+| 平台 | 操作方式 |
+|------|---------|
+| ChatGPT GPTs | SKILL.md → Instructions；references/ → Knowledge |
+| Claude Projects | SKILL.md → Project Instructions；references/ → Knowledge |
+| Claude Code | SKILL.md 放入项目目录，说"读取 SKILL.md 开始调研" |
+| Dify | SKILL.md → Prompt 模板；references/ → 知识库 |
+| Coze | 可使用 Releases 中的 `.skill` 打包文件 |
+| 其他 Agent | SKILL.md → System Prompt |
+
+> **要求：** AI Agent 需支持联网搜索和网页阅读，建议使用能力较强的大模型。
 
 ---
 
