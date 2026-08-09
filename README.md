@@ -67,17 +67,20 @@
 
 ---
 
-## 📂 文件结构
+## 📂 仓库结构
 
 ```
-strategy-insight/
-├── SKILL.md                    # 主文件：完整执行指令
+.
+├── SKILL.md                    # 主文件：完整执行指令（复制这个到任何Agent平台）
 ├── references/
 │   ├── huawei_framework.md     # 五看框架维度详解
 │   ├── scoring_criteria.md     # 双维矩阵评估标准
 │   └── templates.md            # Q&A问题 + 报告模板
-└── scripts/
-    └── strategy_matrix.html    # 矩阵可视化（ECharts 散点图）
+├── scripts/
+│   └── strategy_matrix.html    # 矩阵可视化（ECharts 散点图）
+├── guide.html                  # 交互式使用指南（在线访问：GitHub Pages）
+├── LICENSE                     # Apache 2.0 开源协议
+└── README.md                   # 本文件
 ```
 
 ---
@@ -88,13 +91,26 @@ strategy-insight/
 
 **工具自动完成：** 联网调研 → 机会扫描 → 深描 → 评分 → 矩阵 → 验证 → 输出11份交付物
 
-1. 📥 将 `SKILL.md` 作为系统提示词或对话开头传入 Agent
-2. 📎 附上 `references/` 下的 3 个参考文档
-3. 💬 Agent 启动 Phase 0，开始 3 轮共 15 题结构化 Q&A
-4. 🤖 Agent 自动完成联网调研 → 机会扫描 → 深描 → 评分 → 矩阵 → 验证
-5. 📦 输出 11 份交付物 + 1 份战略机会洞察报告
+### 通用方式（适用于任何 AI Agent）
+
+1. 📋 复制 `SKILL.md` 的全部内容
+2. 📌 粘贴到你的 AI Agent 的系统提示词（System Prompt / Instructions）中
+3. 📎 将 `references/` 下的 3 个文件内容作为知识库或对话上下文附上
+4. 💬 Agent 启动 Phase 0，开始 3 轮共 15 题结构化 Q&A
+5. 🤖 Agent 自动完成联网调研 → 机会扫描 → 深描 → 评分 → 矩阵 → 验证
+6. 📦 输出 11 份交付物 + 1 份战略机会洞察报告
 
 > **要求：** AI Agent 需支持联网搜索和网页阅读，建议使用能力较强的大模型。
+
+### 各平台适配参考
+
+| 平台 | 操作方式 |
+|------|---------|
+| ChatGPT GPTs | SKILL.md → Instructions；references/ → Knowledge |
+| Claude Projects | SKILL.md → Project Instructions；references/ → Knowledge |
+| Dify | SKILL.md → Prompt 模板；references/ → 知识库 |
+| Coze | 可使用 Releases 中的 `.skill` 打包文件（如有） |
+| 其他 Agent | SKILL.md → System Prompt |
 
 ---
 
