@@ -1,6 +1,6 @@
 [skill]
-name=""
-description=""
-skill_package=""
-project_name=""
-project_description=""
+  skill_package = "strategy-insight.skill"
+  name = "strategy-insight"
+  description = "战略机会洞察是面向任何行业的战略机会调研工具，演变自华为\"五看\"框架并融合波士顿矩阵双维定位思想，通过五阶段递进式调研输出决策级洞察报告，覆盖从全景机会扫描到优先级排序的完整链路。数据通过联网搜索获取，不依赖付费API。适用于行业研究、方向选择、市场进入决策、机会评估和资源配置优先级排序等场景。"
+  project_name = "技能包创建项目"
+  project_description = "基于华为五看框架的战略机会调研与优先级排序工具"

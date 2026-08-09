@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>战略机会洞察矩阵</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0d1117;
+            color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+        h1 {
+            color: #f0f6fc;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        #chart {
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+        }
+        .stats {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 16px 20px;
+        }
+        .stat-card h3 {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .stat-card .count {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .stat-card .items {
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>战略机会洞察矩阵</h1>
+    <p class="subtitle">市场吸引力 × 组织适配度 — 双维矩阵评估</p>
+    <div id="chart"></div>
+    <div class="stats" id="stats"></div>
+
+    <script>
+    // ============================================================
+    // 数据区域 — 替换为实际评分数据
+    // 格式: [市场吸引力, 组织适配度, 编号, 名称, 象限]
+    // 象限: star(明星区) / child(幼童区) / cow(金牛区) / dog(瘦狗区)
+    // ============================================================
+    const opportunities = [
+        // 示例数据 — 使用时替换为实际评分结果
+        [71, 82, 'M1', '机会名称1', 'star'],
+        [78, 64, 'M2', '机会名称2', 'star'],
+        [75, 72, 'M3', '机会名称3', 'star'],
+        [67, 61, 'M4', '机会名称4', 'star'],
+        [60, 50, 'M5', '机会名称5', 'star'],
+        [78, 39, 'M6', '机会名称6', 'child'],
+        [76, 26, 'M7', '机会名称7', 'child'],
+        [71, 44, 'M8', '机会名称8', 'child'],
+        [56, 52, 'M9', '机会名称9', 'cow'],
+        [54, 52, 'M10', '机会名称10', 'cow'],
+        [50, 59, 'M11', '机会名称11', 'cow'],
+        [56, 68, 'M12', '机会名称12', 'cow'],
+        [58, 37, 'M13', '机会名称13', 'dog'],
+        [57, 21, 'M14', '机会名称14', 'dog'],
+        [47, 47, 'M15', '机会名称15', 'dog'],
+    ];
+
+    // 象限颜色和名称（靠接波士顿矩阵经典命名）
+    const quadrantConfig = {
+        star:  { color: '#3fb950', name: '明星区', emoji: '⭐' },
+        child: { color: '#d29922', name: '幼童区', emoji: '🌙' },
+        cow:   { color: '#58a6ff', name: '金牛区', emoji: '🐄' },
+        dog:   { color: '#f85149', name: '瘦狗区', emoji: '🐕' },
+    };
+
+    // 阈值
+    const MARKET_THRESHOLD = 60;  // 市场吸引力阈值（纵轴）
+    const ORG_THRESHOLD = 50;     // 组织适配度阈值（横轴）
+
+    // 准备散点图数据（按象限分组）
+    // 注意：X轴=组织适配度，Y轴=市场吸引力（GE/麦肯锡矩阵惯例）
+    const seriesData = {};
+    Object.keys(quadrantConfig).forEach(key => { seriesData[key] = []; });
+
+    opportunities.forEach(([market, org, id, name, quadrant]) => {
+        seriesData[quadrant].push({
+            value: [org, market],  // [x=组织适配度, y=市场吸引力]
+            id: id,
+            name: name,
+        });
+    });
+
+    // 构建ECharts series
+    const series = Object.keys(quadrantConfig).map(key => ({
+        name: quadrantConfig[key].emoji + ' ' + quadrantConfig[key].name,
+        type: 'scatter',
+        data: seriesData[key],
+        symbolSize: 18,
+        itemStyle: {
+            color: quadrantConfig[key].color,
+            opacity: 0.85,
+            borderColor: quadrantConfig[key].color,
+            borderWidth: 2,
+        },
+        emphasis: {
+            itemStyle: { opacity: 1, shadowBlur: 10, shadowColor: quadrantConfig[key].color },
+            scale: 1.3,
+        },
+        label: {
+            show: true,
+            position: 'right',
+            distance: 8,
+            formatter: function(params) {
+                return params.data.id;
+            },
+            fontSize: 11,
+            color: '#c9d1d9',
+        },
+        tooltip: {
+            formatter: function(params) {
+                return '<b>' + params.data.id + ': ' + params.data.name + '</b><br/>组织适配度: ' + params.value[0] + '<br/>市场吸引力: ' + params.value[1];
+            }
+        },
+    }));
+
+    // 初始化图表
+    const chart = echarts.init(document.getElementById('chart'), 'dark');
+
+    // 阈值线配置
+    // X轴=组织适配度阈值（竖线），Y轴=市场吸引力阈值（横线）
+    series[0].markLine = {
+        silent: true,
+        symbol: 'none',
+        lineStyle: { color: '#f0f6fc', type: 'solid', width: 1.5, opacity: 0.4 },
+        data: [
+            { xAxis: ORG_THRESHOLD, label: { show: true, formatter: '适配度阈值 ' + ORG_THRESHOLD, color: '#8b949e', fontSize: 10, position: 'insideStartTop' } },
+            { yAxis: MARKET_THRESHOLD, label: { show: true, formatter: '吸引力阈值 ' + MARKET_THRESHOLD, color: '#8b949e', fontSize: 10, position: 'insideStartTop' } },
+        ],
+    };
+
+    const option = {
+        backgroundColor: 'transparent',
+        grid: { left: 100, right: 120, top: 40, bottom: 85 },
+        tooltip: {
+            trigger: 'item',
+            backgroundColor: '#161b22',
+            borderColor: '#30363d',
+            textStyle: { color: '#c9d1d9', fontSize: 13 },
+        },
+        legend: {
+            show: true,
+            bottom: 5,
+            textStyle: { color: '#8b949e', fontSize: 12 },
+            itemWidth: 12,
+            itemHeight: 12,
+        },
+        xAxis: {
+            name: '组织适配度',
+            nameLocation: 'middle',
+            nameGap: 38,
+            nameTextStyle: { color: '#8b949e', fontSize: 13, fontWeight: 500 },
+            min: 10,
+            max: 90,
+            splitLine: { show: true, lineStyle: { color: '#21262d', type: 'dashed' } },
+            axisLine: { lineStyle: { color: '#30363d' } },
+            axisLabel: { color: '#8b949e', fontSize: 11 },
+        },
+        yAxis: {
+            name: '市场吸引力',
+            nameLocation: 'middle',
+            nameGap: 55,
+            nameTextStyle: { color: '#8b949e', fontSize: 13, fontWeight: 500 },
+            min: 35,
+            max: 85,
+            splitLine: { show: true, lineStyle: { color: '#21262d', type: 'dashed' } },
+            axisLine: { lineStyle: { color: '#30363d' } },
+            axisLabel: { color: '#8b949e', fontSize: 11 },
+        },
+        series: series,
+        // 象限标签（GE/麦肯锡矩阵布局）
+        // 明星区: 高吸引力+高适配 → 右上
+        // 幼童区: 高吸引力+低适配 → 左上
+        // 金牛区: 低吸引力+高适配 → 右下
+        // 瘦狗区: 低吸引力+低适配 → 左下
+        graphic: [
+            { type: 'text', right: 140, top: 55, style: { text: '⭐ 明星区', fill: '#3fb950', fontSize: 13, fontWeight: 600 } },
+            { type: 'text', left: 110, top: 55, style: { text: '🌙 幼童区', fill: '#d29922', fontSize: 13, fontWeight: 600 } },
+            { type: 'text', right: 140, bottom: 90, style: { text: '🐄 金牛区', fill: '#58a6ff', fontSize: 13, fontWeight: 600 } },
+            { type: 'text', left: 110, bottom: 90, style: { text: '🐕 瘦狗区', fill: '#f85149', fontSize: 13, fontWeight: 600 } },
+        ],
+    };
+
+    chart.setOption(option);
+    window.addEventListener('resize', () => chart.resize());
+
+    // ============================================================
+    // 统计卡片
+    // ============================================================
+    const statsContainer = document.getElementById('stats');
+    const quadrantCounts = {};
+    const quadrantItems = {};
+    Object.keys(quadrantConfig).forEach(key => {
+        quadrantCounts[key] = 0;
+        quadrantItems[key] = [];
+    });
+
+    opportunities.forEach(([market, org, id, name, quadrant]) => {
+        quadrantCounts[quadrant]++;
+        quadrantItems[quadrant].push(id + ' ' + name);
+    });
+
+    Object.keys(quadrantConfig).forEach(key => {
+        const config = quadrantConfig[key];
+        const card = document.createElement('div');
+        card.className = 'stat-card';
+        card.style.borderLeft = '3px solid ' + config.color;
+        card.innerHTML =
+            '<h3 style="color: ' + config.color + '">' + config.emoji + ' ' + config.name + '</h3>' +
+            '<div class="count" style="color: ' + config.color + '">' + quadrantCounts[key] + '</div>' +
+            '<div class="items">' + quadrantItems[key].join('<br/>') + '</div>';
+        statsContainer.appendChild(card);
+    });
+    </script>
+</body>
+</html>
