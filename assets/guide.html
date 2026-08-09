@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>战略机会洞察 · 使用指南</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0a0e14; color:#e6edf3; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6; padding:40px 20px;
+  }
+  .container { max-width:960px; margin:0 auto; }
+
+  /* Header */
+  .header { text-align:center; margin-bottom:36px; }
+  .header h1 { font-size:28px; font-weight:700; color:#f0f6fc; margin-bottom:8px; }
+  .header .subtitle { font-size:14px; color:#8b949e; }
+
+  /* Section titles */
+  .section-title { font-size:18px; font-weight:700; color:#f0f6fc; margin:40px 0 16px; padding-left:12px; border-left:3px solid #58a6ff; }
+
+  /* Tool intro */
+  .intro {
+    background:#11151c; border:1px solid #21262d; border-radius:12px; padding:28px; margin-bottom:36px;
+  }
+  .intro-tagline { font-size:15px; color:#c9d1d9; margin-bottom:20px; line-height:1.8; }
+  .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  .intro-item { background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:16px; }
+  .intro-item h4 { font-size:13px; color:#8b949e; margin-bottom:6px; font-weight:600; }
+  .intro-item p { font-size:13px; color:#c9d1d9; }
+
+  /* Methodology */
+  .method-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+  .method-card { background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:14px 16px; border-left:3px solid #58a6ff; }
+  .method-card h4 { font-size:13px; color:#f0f6fc; font-weight:700; margin-bottom:4px; }
+  .method-card .method-ref { font-size:11px; color:#8b949e; margin-bottom:6px; }
+  .method-card p { font-size:12px; color:#b1bac4; }
+
+  /* Core flow summary */
+  .flow-summary { font-size:13px; color:#c9d1d9; background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:16px; margin-bottom:16px; line-height:1.8; }
+  .flow-summary strong { color:#58a6ff; }
+
+  /* Differentiation */
+  .diff-list { list-style:none; padding:0; }
+  .diff-list li { font-size:13px; color:#c9d1d9; padding:6px 0 6px 20px; position:relative; }
+  .diff-list li::before { content:"▸"; position:absolute; left:0; color:#3fb950; font-weight:700; }
+  .diff-list li strong { color:#f0f6fc; }
+
+  /* Data & trigger */
+  .intro-footer { font-size:13px; color:#8b949e; margin-top:16px; padding-top:16px; border-top:1px solid #21262d; }
+  .intro-footer p { margin-bottom:4px; }
+  .intro-footer strong { color:#c9d1d9; }
+
+  /* Core features */
+  .features { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-bottom:36px; }
+  .feature-card { background:#11151c; border:1px solid #21262d; border-radius:10px; padding:16px 14px; text-align:center; }
+  .feature-icon { font-size:24px; margin-bottom:8px; }
+  .feature-card h4 { font-size:13px; color:#f0f6fc; font-weight:700; margin-bottom:6px; }
+  .feature-card p { font-size:11px; color:#8b949e; line-height:1.5; }
+
+  /* Legend */
+  .legend {
+    background:#11151c; border:1px solid #21262d; border-radius:10px; padding:20px; margin-bottom:36px;
+  }
+  .legend-title { font-size:13px; color:#8b949e; margin-bottom:12px; font-weight:600; }
+  .legend-items { display:flex; flex-wrap:wrap; gap:12px; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:13px; color:#c9d1d9; }
+  .badge {
+    display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:12px;
+    font-size:11px; font-weight:600; white-space:nowrap;
+  }
+  .badge-search { background:rgba(31,111,235,0.15); color:#58a6ff; border:1px solid rgba(31,111,235,0.3); }
+  .badge-web { background:rgba(35,134,54,0.15); color:#3fb950; border:1px solid rgba(35,134,54,0.3); }
+  .badge-llm { background:rgba(137,87,229,0.15); color:#bc8cff; border:1px solid rgba(137,87,229,0.3); }
+  .badge-qa { background:rgba(210,153,34,0.15); color:#e3b341; border:1px solid rgba(210,153,34,0.3); }
+  .badge-method { background:rgba(255,215,0,0.1); color:#ffd700; border:1px solid rgba(255,215,0,0.25); font-style:italic; font-size:10px; padding:1px 8px; }
+
+  /* Flow */
+  .flow { display:flex; flex-direction:column; align-items:center; gap:0; }
+  .phase-card {
+    width:100%; background:#11151c; border:1px solid #21262d; border-radius:12px;
+    padding:20px 24px; position:relative; border-left:4px solid #444;
+  }
+  .phase-card.p0 { border-left-color:#58a6ff; }
+  .phase-card.p1 { border-left-color:#f0883e; }
+  .phase-card.p2 { border-left-color:#f778ba; }
+  .phase-card.p3 { border-left-color:#a371f7; }
+  .phase-card.p4 { border-left-color:#3fb950; }
+  .phase-card.p5 { border-left-color:#ffd700; }
+
+  .phase-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+  .phase-title { font-size:16px; font-weight:700; color:#f0f6fc; }
+  .phase-tag { font-size:11px; color:#8b949e; background:#1c2128; padding:2px 8px; border-radius:10px; }
+  .phase-badges { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+
+  .phase-desc { font-size:13px; color:#b1bac4; margin-bottom:12px; }
+
+  .dim-list { list-style:none; padding:0; }
+  .dim-list li {
+    font-size:13px; color:#c9d1d9; padding:4px 0 4px 16px; position:relative;
+  }
+  .dim-list li::before { content:"▸"; position:absolute; left:0; color:#6e7681; }
+
+  .output-box {
+    margin-top:12px; padding:8px 14px; background:#0d1117; border:1px solid #30363d;
+    border-radius:8px; font-size:12px; color:#8b949e;
+  }
+  .output-box strong { color:#3fb950; }
+  .note-box {
+    margin-top:8px; padding:6px 14px; background:rgba(248,81,73,0.08); border:1px solid rgba(248,81,73,0.2);
+    border-radius:8px; font-size:12px; color:#f85149;
+  }
+
+  /* Arrow */
+  .arrow {
+    width:2px; height:32px; background:#30363d; margin:0 auto; position:relative;
+  }
+  .arrow::after {
+    content:""; position:absolute; bottom:-6px; left:-5px;
+    border-left:6px solid transparent; border-right:6px solid transparent;
+    border-top:8px solid #30363d;
+  }
+
+  /* QA Table */
+  .qa-table { width:100%; border-collapse:collapse; margin-top:8px; }
+  .qa-table th { font-size:11px; color:#8b949e; text-align:left; padding:6px 8px; border-bottom:1px solid #30363d; font-weight:600; }
+  .qa-table td { font-size:12px; color:#c9d1d9; padding:5px 8px; border-bottom:1px solid #1c2128; }
+  .qa-table .qa-round { font-weight:700; color:#e3b341; font-size:11px; }
+  .qa-table .qa-feed { font-size:10px; color:#6e7681; }
+  .qa-table tr:last-child td { border-bottom:none; }
+
+  /* Sub-phases for Phase 5 */
+  .subphases { display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .subphase {
+    background:#0d1117; border:1px solid #21262d; border-radius:10px; padding:16px 20px;
+    border-left:3px solid #ffd700;
+  }
+  .subphase-title { font-size:14px; font-weight:600; color:#f0f6fc; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .subphase-num { font-size:11px; background:#ffd700; color:#0a0e14; padding:1px 7px; border-radius:8px; font-weight:700; }
+  .subphase-desc { font-size:12px; color:#b1bac4; margin-bottom:8px; }
+  .subphase .dim-list li { font-size:12px; }
+  .subphase .output-box { font-size:11px; padding:6px 12px; }
+
+  .sub-arrow { width:2px; height:20px; background:#30363d; margin:0 auto; position:relative; }
+  .sub-arrow::after {
+    content:""; position:absolute; bottom:-5px; left:-4px;
+    border-left:5px solid transparent; border-right:5px solid transparent;
+    border-top:6px solid #30363d;
+  }
+
+  /* Scoring visual */
+  .scoring-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+  .score-col { background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:14px; }
+  .score-col-title { font-size:13px; font-weight:700; margin-bottom:8px; }
+  .score-col-title.market { color:#58a6ff; }
+  .score-col-title.org { color:#e3b341; }
+  .score-row { display:flex; justify-content:space-between; font-size:12px; color:#c9d1d9; padding:2px 0; }
+  .score-row .pct { color:#8b949e; font-weight:600; }
+
+  /* Matrix visual */
+  .matrix-viz { margin-top:12px; display:flex; justify-content:center; }
+  .matrix-box {
+    display:grid; grid-template-columns:60px 1fr 1fr; grid-template-rows:30px 1fr 1fr 30px;
+    width:340px; gap:2px;
+  }
+  .matrix-cell { display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; border-radius:4px; }
+  .mc-label { color:#8b949e; font-size:10px; }
+  .mc-star { background:rgba(63,185,80,0.12); color:#3fb950; border:1px solid rgba(63,185,80,0.3); }
+  .mc-child { background:rgba(210,153,34,0.12); color:#e3b341; border:1px solid rgba(210,153,34,0.3); }
+  .mc-cow { background:rgba(88,166,255,0.12); color:#58a6ff; border:1px solid rgba(88,166,255,0.3); }
+  .mc-dog { background:rgba(248,81,73,0.12); color:#f85149; border:1px solid rgba(248,81,73,0.3); }
+
+  /* Filter funnel */
+  .filter-funnel { display:flex; align-items:center; gap:4px; margin-top:12px; flex-wrap:wrap; justify-content:center; }
+  .filter-step {
+    background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:6px 12px;
+    font-size:11px; color:#c9d1d9; text-align:center;
+  }
+  .filter-arrow { color:#6e7681; font-size:14px; }
+
+  /* Deliverables */
+  .deliverables { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:36px; }
+  .deliv-group { background:#11151c; border:1px solid #21262d; border-radius:10px; padding:20px; }
+  .deliv-group h4 { font-size:14px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .deliv-group.process h4 { color:#58a6ff; }
+  .deliv-group.eval h4 { color:#e3b341; }
+  .deliv-group.final h4 { color:#3fb950; }
+  .deliv-list { list-style:none; padding:0; }
+  .deliv-list li { font-size:12px; color:#c9d1d9; padding:4px 0; border-bottom:1px solid #1c2128; }
+  .deliv-list li:last-child { border-bottom:none; }
+  .deliv-list li .num { color:#8b949e; font-weight:700; margin-right:4px; }
+
+  /* Data flow section */
+  .dataflow {
+    margin-top:40px; background:#11151c; border:1px solid #21262d; border-radius:12px; padding:24px;
+  }
+  .dataflow h3 { font-size:16px; font-weight:700; color:#f0f6fc; margin-bottom:16px; }
+  .df-table { width:100%; border-collapse:collapse; }
+  .df-table th { font-size:12px; color:#8b949e; text-align:left; padding:8px 10px; border-bottom:1px solid #30363d; font-weight:600; }
+  .df-table td { font-size:12px; color:#c9d1d9; padding:8px 10px; border-bottom:1px solid #1c2128; }
+  .df-table tr:last-child td { border-bottom:none; }
+
+  /* Usage notes */
+  .usage-notes {
+    margin-top:36px; background:#11151c; border:1px solid #21262d; border-radius:12px; padding:24px;
+  }
+  .usage-notes h3 { font-size:16px; font-weight:700; color:#f0f6fc; margin-bottom:16px; }
+  .usage-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .usage-item { background:#0d1117; border:1px solid #30363d; border-radius:10px; padding:16px; }
+  .usage-item h4 { font-size:13px; color:#8b949e; margin-bottom:6px; font-weight:600; }
+  .usage-item p { font-size:13px; color:#c9d1d9; }
+  .usage-item .highlight { color:#3fb950; font-weight:600; }
+
+  /* Footer */
+  .footer { text-align:center; margin-top:40px; padding-top:20px; border-top:1px solid #21262d; }
+  .footer p { font-size:12px; color:#6e7681; }
+
+  /* Responsive */
+  @media (max-width:600px) {
+    .scoring-grid, .intro-grid, .method-grid, .usage-grid { grid-template-columns:1fr; }
+    .features { grid-template-columns:1fr 1fr; }
+    .deliverables { grid-template-columns:1fr; }
+    .matrix-box { width:280px; }
+    .header h1 { font-size:22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>战略机会洞察 · 使用指南</h1>
+    <p class="subtitle">演变自华为"五看"框架 · 融合波士顿矩阵双维定位思想 · 适用于任何行业</p>
+  </div>
+
+  <!-- Tool Introduction -->
+  <div class="intro">
+    <p class="intro-tagline">
+      <strong style="color:#f0f6fc">战略机会洞察</strong>是面向任何行业的战略机会调研工具，演变自华为"五看"战略洞察框架，融合波士顿矩阵双维定位思想，帮助团队从市场全景出发，系统识别、评估和排序业务机会，输出决策级洞察报告。
+    </p>
+
+    <div class="intro-grid">
+      <div class="intro-item">
+        <h4>🎯 给谁用</h4>
+        <p>需要做方向选择的团队或组织——创业公司选赛道、企业探索新业务线、投资人评估赛道机会。</p>
+      </div>
+      <div class="intro-item">
+        <h4>💡 解决什么问题</h4>
+        <p>凭直觉选方向 / 被现有业务框住 / 知道市场大但不确定能不能做 / 机会太多无法系统比较。</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin:20px 0 12px; font-size:15px; border-left-color:#ffd700;">方法论体系</div>
+    <div class="method-grid">
+      <div class="method-card">
+        <h4>五看递进</h4>
+        <div class="method-ref">源自华为五看</div>
+        <p>看趋势→看客户→看对手→看自己→看机会，从市场全景逐步收窄到机会聚焦</p>
+      </div>
+      <div class="method-card">
+        <h4>双维矩阵</h4>
+        <div class="method-ref">融合波士顿矩阵</div>
+        <p>市场吸引力 × 组织适配度，独立计算、独立呈现，四象限定位</p>
+      </div>
+      <div class="method-card">
+        <h4>结构化深描</h4>
+        <div class="method-ref">8维度机会画像</div>
+        <p>每个候选机会从8个维度做全景深描，确保评估有据可依</p>
+      </div>
+      <div class="method-card">
+        <h4>落地验证</h4>
+        <div class="method-ref">四维硬筛 · 可行性分析</div>
+        <p>明星区机会过四道筛子：短期收入 / 执行带宽 / 资源可承受 / 渠道可触达</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin:20px 0 12px; font-size:15px; border-left-color:#3fb950;">核心流程</div>
+    <div class="flow-summary">
+      五阶段递进式调研——<strong>第一看</strong>行业趋势（7维）→ <strong>第二看</strong>客户市场（5维）→ <strong>第三看</strong>竞争格局（6维）→ <strong>第四看</strong>自身能力（4维）→ <strong>第五看</strong>机会评估（5个Phase：扫描30-50候选→8维深描15-25个→双维矩阵评分→落地验证→汇总排序）。前四看强制纯客观，所有数据标注来源链接。
+    </div>
+
+    <div class="section-title" style="margin:20px 0 8px; font-size:15px; border-left-color:#f778ba;">差异化三点</div>
+    <ul class="diff-list">
+      <li><strong>市场优先</strong>——强制前四看纯客观，不被自身业务框住</li>
+      <li><strong>双维解耦</strong>——市场吸引力不引入组织信息，组织适配度不参考市场规模，独立计算独立呈现</li>
+      <li><strong>落地硬验证</strong>——明星区机会必须过四道筛子，拒绝"看着好但做不了"</li>
+    </ul>
+
+    <div class="intro-footer">
+      <p><strong>数据获取：</strong>联网搜索 + 网页阅读，不依赖任何外部付费API。</p>
+      <p><strong>你只需要：</strong>回答3轮15题（约30min）→ 工具自动联网调研→扫描→深描→评分→矩阵→验证→输出11份交付物。</p>
+    </div>
+  </div>
+
+  <!-- Core Features -->
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h4>市场优先</h4>
+      <p>从市场全景出发，不被现有业务框住</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h4>双维解耦</h4>
+      <p>市场吸引力与组织适配度独立计算，互不干扰</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h4>落地验证</h4>
+      <p>明星区机会过4道筛子，确保可落地</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h4>行业通用</h4>
+      <p>适用于任何行业，维度自适应</p>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-title">📊 数据来源说明 — 不依赖任何外部付费API</div>
+    <div class="legend-items">
+      <div class="legend-item"><span class="badge badge-search">🔍 联网搜索</span> 搜索行业报告/新闻/融资/竞品</div>
+      <div class="legend-item"><span class="badge badge-web">📄 网页阅读</span> 读取原始来源页面验证数据</div>
+      <div class="legend-item"><span class="badge badge-llm">🧠 LLM分析</span> 基于已收集信息推理/评分/归类</div>
+      <div class="legend-item"><span class="badge badge-qa">💬 用户Q&A</span> 结构化问答收集组织信息</div>
+      <div class="legend-item"><span class="badge badge-method">📐 方法论</span> 各环节靠接的成熟方法论</div>
+    </div>
+  </div>
+
+  <!-- Flow -->
+  <div class="flow">
+
+    <!-- Phase 0 -->
+    <div class="phase-card p0">
+      <div class="phase-header">
+        <div class="phase-title">Phase 0 · 调研方案生成</div>
+        <div class="phase-badges"><span class="badge badge-qa">💬 用户Q&A</span></div>
+      </div>
+      <div class="phase-desc">通过3轮结构化问答收集组织信息，确定调研行业方向，生成调研方案文档</div>
+
+      <table class="qa-table">
+        <thead>
+          <tr>
+            <th style="width:80px">轮次</th>
+            <th>问题</th>
+            <th style="width:140px">喂给哪个环节</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="qa-round" rowspan="6">第一轮<br>组织构成</td><td>1. 团队/组织有多少人？</td><td class="qa-feed">组织适配度·执行带宽</td></tr>
+          <tr><td>2. 成员各自角色是什么？</td><td class="qa-feed">组织适配度·战略协同</td></tr>
+          <tr><td>3. 核心技能有哪些？</td><td class="qa-feed">组织适配度·技术匹配</td></tr>
+          <tr><td>4. 每人可投入时间？</td><td class="qa-feed">落地验证·执行带宽</td></tr>
+          <tr><td>5. 地理分布？</td><td class="qa-feed">落地验证·渠道可触达</td></tr>
+          <tr><td>6. 谁是实际技术主力？</td><td class="qa-feed">组织适配度·技术匹配（关键）</td></tr>
+          <tr><td class="qa-round" rowspan="4">第二轮<br>产品与技术</td><td>7. 现有产品处于什么阶段？</td><td class="qa-feed">组织适配度·战略协同</td></tr>
+          <tr><td>8. 当前用户数和营收？</td><td class="qa-feed">落地验证·短期收入</td></tr>
+          <tr><td>9. 技术栈是什么？</td><td class="qa-feed">组织适配度·技术匹配</td></tr>
+          <tr><td>10. 有哪些可复用技术资产？</td><td class="qa-feed">组织适配度·资源匹配</td></tr>
+          <tr><td class="qa-round" rowspan="5">第三轮<br>资源与渠道</td><td>11. 资金状况如何？</td><td class="qa-feed">落地验证·资源可承受</td></tr>
+          <tr><td>12. 有哪些客户渠道？</td><td class="qa-feed">落地验证·渠道可触达</td></tr>
+          <tr><td>13. 协作方式？</td><td class="qa-feed">组织适配度·执行带宽</td></tr>
+          <tr><td>14. 想调研什么行业/方向？</td><td class="qa-feed">确定调研方向（关键）</td></tr>
+          <tr><td>15. 关注哪个市场层级？</td><td class="qa-feed">市场层级定位</td></tr>
+        </tbody>
+      </table>
+
+      <div class="output-box"><strong>📤 输出：</strong>调研方案文档（含五看框架说明、各看维度、时间规划、信息来源标准、调研行业方向）</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 第一看 -->
+    <div class="phase-card p1">
+      <div class="phase-header">
+        <div class="phase-title">第一看 · 看趋势</div>
+        <div class="phase-badges">
+          <span class="badge badge-method">📐 PEST</span>
+          <span class="badge badge-search">🔍 联网搜索</span>
+          <span class="badge badge-web">📄 网页阅读</span>
+          <span class="badge badge-llm">🧠 LLM知识</span>
+        </div>
+      </div>
+      <div class="phase-desc">7个维度全面扫描目标行业趋势，纯客观描述</div>
+      <ul class="dim-list">
+        <li><strong>政策与监管环境</strong> — 监管框架 / 行业准入 / 合规要求</li>
+        <li><strong>经济与市场环境</strong> — 宏观经济 / 消费力 / 市场周期</li>
+        <li><strong>社会与消费趋势</strong> — 用户行为变迁 / 人口结构 / 消费习惯</li>
+        <li><strong>关键技术演进</strong> — 核心技术发展 / 成本曲线 / 成熟度</li>
+        <li><strong>市场规模与增速</strong> — TAM / SAM / SOM</li>
+        <li><strong>资本流向</strong> — 投融资热点 / 估值水平 / 退出路径</li>
+        <li><strong>产业链价值迁移</strong> — 价值在向哪里转移</li>
+      </ul>
+      <div class="note-box">⚠️ 纯客观：不出现"建议""应该""值得""推荐"等判断性词汇 · 必须覆盖中小视角 · 所有数据标注来源链接</div>
+      <div class="output-box"><strong>📤 输出：</strong>趋势简报（7章，每章2-5小节，Markdown格式）</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 第二看 -->
+    <div class="phase-card p2">
+      <div class="phase-header">
+        <div class="phase-title">第二看 · 看客户市场</div>
+        <div class="phase-badges">
+          <span class="badge badge-method">📐 市场细分</span>
+          <span class="badge badge-search">🔍 联网搜索</span>
+          <span class="badge badge-web">📄 网页阅读</span>
+          <span class="badge badge-llm">🧠 LLM知识</span>
+        </div>
+      </div>
+      <div class="phase-desc">5个维度分析客户分层、痛点、付费意愿和决策链</div>
+      <ul class="dim-list">
+        <li><strong>客户分层画像</strong> — 大企业 / 中小企业 / 个人用户 / 开发者</li>
+        <li><strong>各层级痛点与未满足需求</strong></li>
+        <li><strong>付费意愿与预算分析</strong></li>
+        <li><strong>客户获取渠道与成本</strong></li>
+        <li><strong>客户决策链分析</strong></li>
+      </ul>
+      <div class="output-box"><strong>📤 输出：</strong>客户市场简报（5章，Markdown格式，标注来源）</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 第三看 -->
+    <div class="phase-card p3">
+      <div class="phase-header">
+        <div class="phase-title">第三看 · 看对手</div>
+        <div class="phase-badges">
+          <span class="badge badge-method">📐 波特五力</span>
+          <span class="badge badge-search">🔍 联网搜索</span>
+          <span class="badge badge-web">📄 网页阅读</span>
+          <span class="badge badge-llm">🧠 LLM知识</span>
+        </div>
+      </div>
+      <div class="phase-desc">6个维度分析竞争格局，重点覆盖同阶段竞品和竞争空白</div>
+      <ul class="dim-list">
+        <li><strong>头部玩家格局</strong> — 大厂布局 / 行业龙头</li>
+        <li><strong>同阶段竞品</strong> — 同规模/同阶段参与者（必须覆盖）</li>
+        <li><strong>替代方案与新进入者威胁</strong></li>
+        <li><strong>竞品定价模式对比</strong></li>
+        <li><strong>竞品技术路线对比</strong></li>
+        <li><strong>竞争空白点识别</strong></li>
+      </ul>
+      <div class="output-box"><strong>📤 输出：</strong>竞争格局简报（6章，Markdown格式，标注来源）</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 第四看 -->
+    <div class="phase-card p4">
+      <div class="phase-header">
+        <div class="phase-title">第四看 · 看自己</div>
+        <div class="phase-badges">
+          <span class="badge badge-method">📐 VRIO</span>
+          <span class="badge badge-qa">💬 用户Q&A</span>
+        </div>
+      </div>
+      <div class="phase-desc">4个维度盘点组织能力和资源，基于Q&A收集，不联网</div>
+      <ul class="dim-list">
+        <li><strong>组织能力矩阵</strong> — 技术/产品/销售/渠道，每项标注强/中/弱</li>
+        <li><strong>资源盘点</strong> — 资金/人脉/数据/渠道/时间</li>
+        <li><strong>现有产品与技术资产</strong></li>
+        <li><strong>能力-机会初步对照</strong> — 仅客观罗列，不做判断</li>
+      </ul>
+      <div class="output-box"><strong>📤 输出：</strong>内部能力盘点（4章，Markdown格式）</div>
+    </div>
+
+    <div class="arrow"></div>
+
+    <!-- 第五看 -->
+    <div class="phase-card p5">
+      <div class="phase-header">
+        <div class="phase-title">第五看 · 看机会（市场驱动五步法）</div>
+        <div class="phase-tag">综合前四看</div>
+      </div>
+      <div class="phase-desc">将前四看的洞察转化为可评估、可排序的机会清单。5个Phase逐步收窄。</div>
+
+      <div class="subphases">
+
+        <!-- Sub Phase 1 -->
+        <div class="subphase">
+          <div class="subphase-title"><span class="subphase-num">P1</span> 机会扫描</div>
+          <div class="subphase-desc">从前四看报告中系统扫描机会候选</div>
+          <ul class="dim-list">
+            <li>从市场趋势 → 识别增量市场</li>
+            <li>从客户痛点 → 识别未满足需求</li>
+            <li>从竞争空白 → 识别差异化机会</li>
+            <li>从技术趋势 → 识别新兴可能</li>
+          </ul>
+          <div class="phase-badges" style="margin-top:6px"><span class="badge badge-llm">🧠 LLM分析（基于前四看报告）</span></div>
+          <div class="output-box"><strong>📤 输出：</strong>30-50个机会候选（编号+名称+一句话描述+来源看）</div>
+        </div>
+
+        <div class="sub-arrow"></div>
+
+        <!-- Sub Phase 2 -->
+        <div class="subphase">
+          <div class="subphase-title"><span class="subphase-num">P2</span> 初筛合并 + 8维深描</div>
+          <div class="subphase-desc">先合并重叠、淘汰弱信号 → 保留15-25个 → 每个做8维深度画像</div>
+          <ul class="dim-list">
+            <li><strong>初筛</strong>：合并重叠机会 + 淘汰弱信号 → 15-25个</li>
+            <li><strong>8维深描</strong>：① 机会定义 ② 市场规模(TAM/SAM/SOM) ③ 客户画像 ④ 竞争格局 ⑤ 技术可行性 ⑥ 商业模式 ⑦ 时机窗口 ⑧ 风险因素</li>
+          </ul>
+          <div class="phase-badges" style="margin-top:6px">
+            <span class="badge badge-search">🔍 联网搜索</span>
+            <span class="badge badge-web">📄 网页阅读</span>
+            <span style="font-size:11px;color:#8b949e">验证市场规模/竞品/技术成熟度</span>
+          </div>
+          <div class="output-box"><strong>📤 输出：</strong>15-25个机会深描文档（每个800-1500字，附来源链接）</div>
+        </div>
+
+        <div class="sub-arrow"></div>
+
+        <!-- Sub Phase 3 -->
+        <div class="subphase">
+          <div class="subphase-title"><span class="subphase-num">P3</span> 双维矩阵评估</div>
+          <div class="subphase-desc">每个机会打两个独立分数，互不干扰</div>
+
+          <div class="scoring-grid">
+            <div class="score-col">
+              <div class="score-col-title market">📊 市场吸引力（100分）</div>
+              <div class="score-row"><span>市场规模</span><span class="pct">30%</span></div>
+              <div class="score-row"><span>盈利潜力</span><span class="pct">25%</span></div>
+              <div class="score-row"><span>竞争空白度</span><span class="pct">20%</span></div>
+              <div class="score-row"><span>时机窗口</span><span class="pct">15%</span></div>
+              <div class="score-row"><span>风险可控</span><span class="pct">10%</span></div>
+              <div style="font-size:11px;color:#6e7681;margin-top:6px">只看市场，不引入任何组织信息</div>
+            </div>
+            <div class="score-col">
+              <div class="score-col-title org">👥 组织适配度（100分）</div>
+              <div class="score-row"><span>技术匹配</span><span class="pct">30%</span></div>
+              <div class="score-row"><span>资源匹配</span><span class="pct">25%</span></div>
+              <div class="score-row"><span>渠道匹配</span><span class="pct">25%</span></div>
+              <div class="score-row"><span>战略协同</span><span class="pct">20%</span></div>
+              <div style="height:20px"></div>
+              <div style="font-size:11px;color:#6e7681;margin-top:6px">只看组织，不参考市场规模</div>
+            </div>
+          </div>
+
+          <div class="phase-badges" style="margin-top:8px">
+            <span class="badge badge-method">📐 波士顿矩阵</span>
+            <span class="badge badge-llm">🧠 LLM分析计算（基于P2深描+第四看组织信息）</span>
+          </div>
+          <div class="note-box" style="margin-top:6px">⚠️ 两个分数独立计算、独立呈现，不合并为单一总分 · 每个维度需给出50-100字评分依据</div>
+          <div class="output-box"><strong>📤 输出：</strong>25个机会 × 2个独立分数 + 逐维度评分依据</div>
+        </div>
+
+        <div class="sub-arrow"></div>
+
+        <!-- Sub Phase 4 -->
+        <div class="subphase">
+          <div class="subphase-title"><span class="subphase-num">P4</span> 战略矩阵定位 + 落地验证</div>
+          <div class="subphase-desc">双维交叉定位 → 四象限分类 → 明星区机会过四道筛子</div>
+
+          <!-- Matrix -->
+          <div class="matrix-viz">
+            <div class="matrix-box">
+              <div class="matrix-cell mc-label"></div>
+              <div class="matrix-cell mc-label" style="color:#3fb950">适配度 ≥ 50</div>
+              <div class="matrix-cell mc-label" style="color:#f85149">适配度 < 50</div>
+
+              <div class="matrix-cell mc-label" style="writing-mode:vertical-lr;transform:rotate(180deg);color:#58a6ff">吸引力 ≥ 60</div>
+              <div class="matrix-cell mc-star">⭐ 明星区<br><span style="font-size:9px;color:#8b949e">双高</span></div>
+              <div class="matrix-cell mc-child">🌙 幼童区<br><span style="font-size:9px;color:#8b949e">市场高·组织低</span></div>
+
+              <div class="matrix-cell mc-label" style="writing-mode:vertical-lr;transform:rotate(180deg);color:#f85149">吸引力 < 60</div>
+              <div class="matrix-cell mc-cow">🐄 金牛区<br><span style="font-size:9px;color:#8b949e">组织高·市场低</span></div>
+              <div class="matrix-cell mc-dog">🐕 瘦狗区<br><span style="font-size:9px;color:#8b949e">双低</span></div>
+            </div>
+          </div>
+
+          <div style="font-size:12px;color:#b1bac4;margin-top:12px;text-align:center">↓ 仅对 ⭐ 明星区机会进行落地验证 ↓</div>
+
+          <!-- Filter funnel -->
+          <div class="filter-funnel">
+            <div class="filter-step">💰 短期收入<br><span style="font-size:10px;color:#6e7681">能否3个月内产生<br>第一笔付费收入？</span></div>
+            <div class="filter-arrow">→</div>
+            <div class="filter-step">⚙️ 执行带宽<br><span style="font-size:10px;color:#6e7681">组织当前带宽<br>能否支撑？需多少FTE？</span></div>
+            <div class="filter-arrow">→</div>
+            <div class="filter-step">💵 资源可承受<br><span style="font-size:10px;color:#6e7681">启动成本是否<br>在资源可承受范围？</span></div>
+            <div class="filter-arrow">→</div>
+            <div class="filter-step">📡 渠道可触达<br><span style="font-size:10px;color:#6e7681">目标客户是否<br>现有渠道可触达？</span></div>
+          </div>
+
+          <div style="font-size:11px;color:#8b949e;margin-top:8px;text-align:center">验证结果：✅ 全通过 → 优先推进 ｜ ⚠️ 条件通过 → 标注前置条件 ｜ ❌ 不通过 → 降级或放弃</div>
+
+          <div class="phase-badges" style="margin-top:8px">
+            <span class="badge badge-method">📐 可行性分析</span>
+            <span class="badge badge-llm">🧠 LLM分析（基于P3评分+第四看组织约束）</span>
+          </div>
+          <div class="output-box"><strong>📤 输出：</strong>明星区机会落地验证报告 + 明星区机会排序</div>
+        </div>
+
+        <div class="sub-arrow"></div>
+
+        <!-- Sub Phase 5 -->
+        <div class="subphase">
+          <div class="subphase-title"><span class="subphase-num">P5</span> 汇总输出</div>
+          <div class="subphase-desc">汇总全部洞察结果，输出完整报告</div>
+          <ul class="dim-list">
+            <li><strong>机会汇总表</strong> — 编号/名称/市场吸引力/组织适配度/象限</li>
+            <li><strong>四象限分布统计</strong> — 明星区X个 / 幼童区X个 / 金牛区X个 / 瘦狗区X个</li>
+            <li><strong>落地验证报告</strong> — 四维度判断+验证结果</li>
+            <li><strong>机会排序</strong> — 按验证结果+双维度分数综合排列</li>
+            <li><strong>战略矩阵可视化大图</strong> — 散点图（读取HTML模板生成）</li>
+          </ul>
+          <div class="output-box"><strong>📤 输出：</strong>战略机会洞察报告（汇总全部前序产物）</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Deliverables -->
+  <div class="section-title">📦 交付物清单（11份）</div>
+  <div class="deliverables">
+    <div class="deliv-group process">
+      <h4>🔵 过程产物（5份）</h4>
+      <ul class="deliv-list">
+        <li><span class="num">①</span> 调研方案</li>
+        <li><span class="num">②</span> 趋势简报</li>
+        <li><span class="num">③</span> 客户市场简报</li>
+        <li><span class="num">④</span> 竞争格局简报</li>
+        <li><span class="num">⑤</span> 内部能力盘点</li>
+      </ul>
+    </div>
+    <div class="deliv-group eval">
+      <h4>🟡 评估产物（5份）</h4>
+      <ul class="deliv-list">
+        <li><span class="num">⑥</span> 机会扫描清单</li>
+        <li><span class="num">⑦</span> 机会深描文档</li>
+        <li><span class="num">⑧</span> 双维评分表</li>
+        <li><span class="num">⑨</span> 战略矩阵可视化</li>
+        <li><span class="num">⑩</span> 落地验证报告</li>
+      </ul>
+    </div>
+    <div class="deliv-group final">
+      <h4>🟢 最终汇总（1份）</h4>
+      <ul class="deliv-list">
+        <li><span class="num">⑪</span> 战略机会洞察报告</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Data Flow Summary -->
+  <div class="dataflow">
+    <h3>📋 数据来源汇总 — 每个环节的数据怎么来</h3>
+    <table class="df-table">
+      <thead>
+        <tr>
+          <th>环节</th>
+          <th>数据获取方式</th>
+          <th>具体说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Phase 0 · 组织信息</td>
+          <td><span class="badge badge-qa">💬 用户Q&A</span></td>
+          <td>3轮15题结构化问答，从用户处直接收集，不联网</td>
+        </tr>
+        <tr>
+          <td>第一看 · 看趋势</td>
+          <td><span class="badge badge-search">🔍 搜索</span> <span class="badge badge-web">📄 阅读</span> <span class="badge badge-llm">🧠 LLM</span></td>
+          <td>搜索行业报告/新闻/融资数据；网页阅读原始来源验证关键数据</td>
+        </tr>
+        <tr>
+          <td>第二看 · 看客户</td>
+          <td><span class="badge badge-search">🔍 搜索</span> <span class="badge badge-web">📄 阅读</span> <span class="badge badge-llm">🧠 LLM</span></td>
+          <td>搜索客户调研报告/用户反馈/定价/获客成本分析；网页阅读具体报告页面</td>
+        </tr>
+        <tr>
+          <td>第三看 · 看对手</td>
+          <td><span class="badge badge-search">🔍 搜索</span> <span class="badge badge-web">📄 阅读</span> <span class="badge badge-llm">🧠 LLM</span></td>
+          <td>搜索竞品官网/融资信息/产品评测/开源项目；网页阅读定价页和产品文档</td>
+        </tr>
+        <tr>
+          <td>第四看 · 看自己</td>
+          <td><span class="badge badge-qa">💬 用户Q&A</span></td>
+          <td>基于组织自述，不联网搜索</td>
+        </tr>
+        <tr>
+          <td>P1 · 机会扫描</td>
+          <td><span class="badge badge-llm">🧠 LLM分析</span></td>
+          <td>基于前四看报告综合分析，不需额外搜索</td>
+        </tr>
+        <tr>
+          <td>P2 · 机会深描</td>
+          <td><span class="badge badge-search">🔍 搜索</span> <span class="badge badge-web">📄 阅读</span></td>
+          <td>联网搜索验证每个机会的市场规模/竞品/技术成熟度；网页阅读行业报告和竞品页面</td>
+        </tr>
+        <tr>
+          <td>P3 · 双维矩阵评分</td>
+          <td><span class="badge badge-llm">🧠 LLM计算</span></td>
+          <td>基于P2深描数据(市场吸引力)+第四看组织信息(组织适配度)，按评分标准逐维度打分</td>
+        </tr>
+        <tr>
+          <td>P4 · 矩阵+验证</td>
+          <td><span class="badge badge-llm">🧠 LLM分析</span></td>
+          <td>基于P3评分结果+第四看组织约束条件，四象限分类+四维度验证</td>
+        </tr>
+        <tr>
+          <td>P5 · 汇总输出</td>
+          <td><span class="badge badge-llm">🧠 LLM整合</span></td>
+          <td>汇总前序所有结果，生成报告+可视化</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Usage Notes -->
+  <div class="usage-notes">
+    <h3>📋 使用须知</h3>
+    <div class="usage-grid">
+      <div class="usage-item">
+        <h4>你需要做什么</h4>
+        <p>回答3轮共15个问题（约30分钟），确定要调研的行业方向</p>
+      </div>
+      <div class="usage-item">
+        <h4>工具自动完成</h4>
+        <p>联网调研 → 机会扫描 → 深描 → 评分 → 矩阵 → 验证 → 输出</p>
+      </div>
+      <div class="usage-item">
+        <h4>输出格式</h4>
+        <p>Markdown报告 + HTML可视化大图，共<span class="highlight">11份交付物</span></p>
+      </div>
+      <div class="usage-item">
+        <h4>不需要</h4>
+        <p>任何API密钥、付费账号、外部数据订阅</p>
+      </div>
+      <div class="usage-item">
+        <h4>预计耗时</h4>
+        <p>2-3天（含调研+评估全流程）</p>
+      </div>
+      <div class="usage-item">
+        <h4>适用场景</h4>
+        <p>"调研某某行业机会" / "评估某某方向值不值得做" / "团队下一步做什么方向" / "市场进入决策" / "竞品分析+机会识别"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>战略机会洞察 · 演变自华为"五看"框架 · 融合波士顿矩阵双维定位思想 · 适用于任何行业</p>
+  </div>
+
+</div>
+</body>
+</html>
