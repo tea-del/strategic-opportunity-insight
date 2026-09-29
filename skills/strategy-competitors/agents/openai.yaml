@@ -1,0 +1,4 @@
+interface:
+  display_name: "看对手"
+  short_description: "梳理现有玩家、替代方案、定价和竞争格局"
+  default_prompt: "使用 $strategy-competitors 分析我关注市场的竞争格局。"

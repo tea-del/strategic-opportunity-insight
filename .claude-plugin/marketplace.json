@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "strategic-opportunity-insight-marketplace",
+  "version": "2.0.0",
+  "description": "Five-views strategic opportunity research skills and workflows.",
+  "owner": {
+    "name": "tea-del",
+    "url": "https://github.com/tea-del/strategic-opportunity-insight"
+  },
+  "plugins": [
+    {
+      "name": "strategic-opportunity-insight",
+      "description": "Four standalone research skills and four guided strategic opportunity workflows.",
+      "source": "./",
+      "category": "product-management"
+    }
+  ]
+}

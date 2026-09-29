@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>战略机会双维矩阵</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Microsoft YaHei", sans-serif; }
+    body { max-width: 1100px; margin: 0 auto; padding: 24px; color: #172336; background: #f6f8fb; }
+    h1 { margin-bottom: 4px; font-size: 1.7rem; }
+    p { color: #4d5c71; }
+    svg { width: 100%; height: auto; background: white; border: 1px solid #d8e0ea; border-radius: 10px; }
+    .axis { stroke: #26364d; stroke-width: 1.5; }
+    .threshold { stroke: #718198; stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .tick { fill: #5a697b; font-size: 12px; }
+    .quadrant { fill: #34445b; font-size: 16px; font-weight: 700; }
+    .label { fill: #172336; font-size: 12px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; background: white; }
+    th, td { padding: 9px 12px; border: 1px solid #d8e0ea; text-align: left; }
+    th { background: #eaf0f7; }
+    .note { font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>战略机会双维矩阵</h1>
+  <p>横轴：组织适配度；纵轴：市场吸引力。两项各为独立的100分制。</p>
+  <svg id="matrix" viewBox="0 0 900 640" role="img" aria-label="战略机会双维矩阵"></svg>
+  <table id="details"><thead><tr><th>编号</th><th>机会</th><th>市场吸引力</th><th>组织适配度</th><th>象限</th></tr></thead><tbody></tbody></table>
+  <p class="note">阈值：市场吸引力 ≥ 60，组织适配度 ≥ 50。仅对明星区进一步做落地验证。</p>
+  <script>
+    // 生成报告时，将下方数组替换为真实评分；不要保留空数组作为完成的图表。
+    // 例：{ id: "M1", name: "机会名称", market: 72, org: 68 }
+    const opportunities = [];
+
+    const svg = document.getElementById("matrix");
+    const body = document.querySelector("#details tbody");
+    const NS = "http://www.w3.org/2000/svg";
+    const left = 85, top = 45, width = 750, height = 510;
+    const x = value => left + width * value / 100;
+    const y = value => top + height * (1 - value / 100);
+    const colors = { "明星区": "#16865a", "幼童区": "#d18713", "金牛区": "#2677b9", "瘦狗区": "#bd4b4b" };
+    const quadrant = (market, org) => market >= 60 ? (org >= 50 ? "明星区" : "幼童区") : (org >= 50 ? "金牛区" : "瘦狗区");
+
+    function element(type, attrs, label) {
+      const node = document.createElementNS(NS, type);
+      for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, String(value));
+      if (label !== undefined) node.textContent = label;
+      svg.appendChild(node);
+      return node;
+    }
+
+    element("rect", { x: left, y: top, width: width / 2, height: height * .4, fill: "#fff7ea" });
+    element("rect", { x: x(50), y: top, width: width / 2, height: height * .4, fill: "#eaf7f0" });
+    element("rect", { x: left, y: y(60), width: width / 2, height: height * .6, fill: "#fff1f1" });
+    element("rect", { x: x(50), y: y(60), width: width / 2, height: height * .6, fill: "#edf5fc" });
+    element("line", { x1: left, y1: y(0), x2: x(100), y2: y(0), class: "axis" });
+    element("line", { x1: left, y1: y(0), x2: left, y2: y(100), class: "axis" });
+    element("line", { x1: x(50), y1: top, x2: x(50), y2: y(0), class: "threshold" });
+    element("line", { x1: left, y1: y(60), x2: x(100), y2: y(60), class: "threshold" });
+    for (let tick = 0; tick <= 100; tick += 20) {
+      element("text", { x: x(tick), y: y(0) + 24, "text-anchor": "middle", class: "tick" }, String(tick));
+      element("text", { x: left - 15, y: y(tick) + 4, "text-anchor": "end", class: "tick" }, String(tick));
+    }
+    element("text", { x: 460, y: 618, "text-anchor": "middle", class: "quadrant" }, "组织适配度 →");
+    element("text", { x: 17, y: 300, transform: "rotate(-90 17 300)", "text-anchor": "middle", class: "quadrant" }, "市场吸引力 →");
+    for (const [label, cx, cy] of [["幼童区", 240, 70], ["明星区", 650, 70], ["瘦狗区", 240, 530], ["金牛区", 650, 530]]) {
+      element("text", { x: cx, y: cy, "text-anchor": "middle", class: "quadrant" }, label);
+    }
+
+    for (const item of opportunities) {
+      const market = Number(item.market), org = Number(item.org);
+      if (!Number.isFinite(market) || !Number.isFinite(org) || market < 0 || market > 100 || org < 0 || org > 100) continue;
+      const group = quadrant(market, org);
+      const circle = element("circle", { cx: x(org), cy: y(market), r: 7, fill: colors[group] });
+      const tooltip = document.createElementNS(NS, "title");
+      tooltip.textContent = `${item.id} ${item.name}｜市场 ${market}｜组织 ${org}`;
+      circle.appendChild(tooltip);
+      element("text", { x: x(org) + 10, y: y(market) - 9, class: "label" }, String(item.id));
+      const row = document.createElement("tr");
+      for (const value of [item.id, item.name, market, org, group]) {
+        const cell = document.createElement("td");
+        cell.textContent = String(value);
+        row.appendChild(cell);
+      }
+      body.appendChild(row);
+    }
+  </script>
+</body>
+</html>

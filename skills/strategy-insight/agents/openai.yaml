@@ -1,0 +1,4 @@
+interface:
+  display_name: "战略机会洞察"
+  short_description: "从四看到机会发现、比较与完整调研"
+  default_prompt: "使用 $strategy-insight 帮我从头完成战略机会洞察。"

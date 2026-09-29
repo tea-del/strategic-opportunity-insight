@@ -1,0 +1,4 @@
+interface:
+  display_name: "看趋势"
+  short_description: "研究行业趋势、市场规模、政策变化与产业价值迁移"
+  default_prompt: "使用 $strategy-trends 调研我关注行业的趋势。"

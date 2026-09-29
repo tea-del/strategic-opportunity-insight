@@ -1,0 +1,12 @@
+{
+  "name": "strategic-opportunity-insight",
+  "version": "2.0.0",
+  "description": "Five-views strategic opportunity research with four standalone research skills and four guided workflows.",
+  "author": {
+    "name": "tea-del",
+    "url": "https://github.com/tea-del/strategic-opportunity-insight"
+  },
+  "keywords": ["strategy", "market-research", "opportunity-assessment", "five-views"],
+  "homepage": "https://github.com/tea-del/strategic-opportunity-insight",
+  "license": "Apache-2.0"
+}
