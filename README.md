@@ -1,74 +1,116 @@
-# 战略机会洞察（Strategy Insight）
+# Strategic Opportunity Insight
 
-把原版“五看”调研做成可以按需使用的技能包：可以只研究趋势、客户、对手或团队自身，也可以连续完成机会发现、比较和完整洞察。[交互式方法指南](guide.html) 保留；安装与使用以本页为准。
+Four standalone research skills and guided workflows built on the Five Views framework.
 
-这个技能沿用原版的方法边界：**先看市场，再看机会；市场吸引力与组织适配度分别评分；只对明星区做落地验证；最终停在“五看”，不代替团队完成“三定”。**
+[简体中文](README_CN.md) · English
 
-## 先从哪里开始
+[Interactive guide (Chinese)](https://tea-del.github.io/strategic-opportunity-insight/guide.html)
 
-第一次使用任何入口，先完成原版 **3轮15问**：团队构成、产品与技术、资源与渠道。已有完整调研档案时可以核对后复用，不必重复回答。完成问答后，按你想解决的问题选择：
+## What is this?
 
-| 你想知道什么 | 使用入口 | 会得到什么 |
+Strategic Opportunity Insight is a research tool for any industry. Evolved from Huawei's “Five Views” approach to strategic insight and informed by the dual-axis positioning of the BCG matrix, it helps teams start with a broad view of the market, then systematically identify, evaluate, and rank business opportunities. The result is a decision-ready insight report.
+
+**Who it is for:** Teams and organizations choosing a direction—startups selecting a market, companies exploring a new business line, and investors assessing opportunities in a sector.
+
+**What it solves:** Choosing a direction by instinct / being constrained by the current business / seeing a large market but not knowing whether the team can pursue it / having too many opportunities to compare systematically.
+
+## Core design
+
+**Market first** — Keep the first four views fact-based so the team's existing business does not narrow the search.
+
+**Two independent dimensions** — Calculate and present market attractiveness and organizational fit separately:
+
+- **Market attractiveness (100 points):** Market size 30% · Profit potential 25% · Competitive white space 20% · Timing 15% · Manageable risk 10%. Use market evidence only; do not factor in the organization.
+- **Organizational fit (100 points):** Technology fit 30% · Resource fit 25% · Channel fit 25% · Strategic alignment 20%. Use organizational evidence only; do not factor in market size.
+
+Never merge the two scores into a single total. Give each criterion a short, evidence-based scoring rationale (50–100 characters in the original Chinese rubric).
+
+**Four quadrants** — Classify opportunities using organizational fit ≥50 and market attractiveness ≥60. Only opportunities in the Star quadrant receive a delivery-feasibility check:
+
+| Quadrant | Meaning | What to do |
 | --- | --- | --- |
-| “这个行业正在发生什么？” | 看趋势 `strategy-trends` | 行业趋势简报 |
-| “谁有需求，愿不愿意付钱？” | 看客户 `strategy-customers` | 客户市场简报 |
-| “现在有哪些玩家和替代方案？” | 看对手 `strategy-competitors` | 竞争格局简报 |
-| “我们的团队能做什么？” | 看自己 `strategy-capabilities` | 内部能力盘点 |
-| “先把四个方面摸清楚” | 四看调研 `/four-views` | 调研方案与四份简报 |
-| “帮我找有哪些业务方向” | 寻找机会 `/find-opportunities` | 机会扫描、初筛与8维深描 |
-| “比较我手上的几个方向” | 比较机会 `/compare-opportunities` | 双维评分、四象限与明星区验证 |
-| “从头到尾做一次调研” | 完整洞察 `/strategy-insight` | 原版全流程的11份成果 |
+| Star | High market attractiveness · high organizational fit | Prioritize |
+| Question mark | High market attractiveness · low organizational fit | Watch and develop |
+| Cash cow | Low market attractiveness · high organizational fit | Optimize existing business |
+| Dog | Low on both dimensions | Do not invest for now |
 
-后半段会检查它需要的前置资料：已有四看或机会深描就核对后复用，缺少的才补做。比较用户指定的机会时，结果只代表这些候选，不声称已经扫描全市场。
+**Feasibility check** — Put Star opportunities through four filters so “attractive” does not get confused with “executable”: Can the team earn its first paid revenue within three months? Does it have execution capacity? Is the startup cost affordable? Can existing channels reach the target customers?
 
-## Skills (4)
+Result: pass → prioritize; conditional pass → state the prerequisites; fail → downgrade or drop.
 
-- `strategy-trends` — 看趋势：行业、技术、政策、市场规模与价值迁移。
-- `strategy-customers` — 看客户：客户分层、痛点、预算、渠道与决策链。
-- `strategy-competitors` — 看对手：玩家、替代方案、定价、技术路线与竞争空白。
-- `strategy-capabilities` — 看自己：团队能力、资源、渠道与技术资产。
+## Where to start
 
-四个技能各有标准 `SKILL.md` 和完整的Phase 0问答说明，可分别安装与使用。
+Use a standalone skill to answer one research question. Choose a guided workflow when you want to continue from existing research or complete the full Five Views process. An individual entry point stops at its own deliverables; it does not automatically expand into an 11-document report.
 
-## Commands (4)
+Every entry point begins with the same **three rounds of 15 questions** on first use: six about the organization, four about product and technology, and five about resources and channels. These define the research scope and constraints. Existing answers are checked and reused; only missing items are asked again.
 
-- `/four-views` — 四看调研：先了解团队，再看清行业、客户、对手和自身条件。
-- `/find-opportunities` — 寻找机会：在四看基础上扫描、初筛并深描业务方向。
-- `/compare-opportunities` — 比较机会：对指定候选做8维深描、双维评分和落地验证。
-- `/strategy-insight` — 完整洞察：从15问到最终报告，交付11份成果。
+### Standalone skills (4)
 
-这些命令适用于支持自定义命令的平台。**在 ChatGPT/Codex 中，使用组合技能 `$strategy-insight`，直接说“四看调研”“寻找机会”“比较机会”或“完整洞察”即可**；`strategy-insight` 是四个工作流的原生入口，不是第五种独立研究方法。例如：
+- `strategy-trends` — **Trends:** Industry, technology, policy, market size, and value migration. Delivers an industry trends brief.
+- `strategy-customers` — **Customers:** Segments, pain points, willingness to pay, acquisition channels, and buying decisions. Delivers a customer market brief.
+- `strategy-competitors` — **Competitors:** Market leaders, peers, alternatives, pricing, and technical approaches. Delivers a competitive landscape brief.
+- `strategy-capabilities` — **Your organization:** Team capabilities, resources, products, and technology assets. Delivers an internal capability assessment.
 
-> 使用 `$strategy-insight` 完整调研中国宠物医疗行业的战略机会。
+### Guided workflows (4)
 
-> 使用 `$strategy-insight` 比较我提供的三个业务方向；先检查已有四看资料，不足的部分再补齐。
+- `/four-views` — **Research the four views:** Understand the industry, customers, competitors, and your own organization. Delivers a research plan plus four briefs (5 documents).
+- `/find-opportunities` — **Find opportunities:** Use the four views to scan possible business directions. Delivers an opportunity list and eight-dimension deep dives (2 documents); stops before scoring.
+- `/compare-opportunities` — **Compare opportunities:** Assess user-specified or previously shortlisted directions. Delivers a two-axis scorecard, strategic matrix, and feasibility report (3 documents); only Star opportunities receive the feasibility check.
+- `/strategy-insight` — **Full insight:** Run the Five Views process from intake to final report. Delivers the 5 + 2 + 3 documents above, plus the final Strategic Opportunity Insight report (11 documents total).
 
-## 安装与跨平台使用
+Those are each workflow's **target deliverables**. Missing prerequisite research is completed and delivered first; relevant existing material is reused. Running “Find opportunities” or “Compare opportunities” alone does not produce the final report.
 
-核心是通用的 `SKILL.md` 目录结构，不依赖Coze、付费数据API或特定模型的并行任务功能。把需要的技能目录复制到平台的 skills 目录，并保持目录内部的 `references/` 与 `assets/`：
+For example, if you ask to compare three directions, the workflow fills in any missing Four Views research and eight-dimension deep dives for those three directions, then delivers the scorecard, matrix, and feasibility report. It does not invent a 30–50-item market scan just to compare your three options.
 
-```text
-skills/
-├── strategy-trends/
-├── strategy-customers/
-├── strategy-competitors/
-├── strategy-capabilities/
-└── strategy-insight/          # ChatGPT/Codex 的四个组合工作流入口
-    ├── SKILL.md
-    ├── agents/openai.yaml     # OpenAI 客户端界面信息；其他平台可忽略
-    ├── references/
-    └── assets/matrix.html     # 离线可打开的双维矩阵模板
-commands/                      # 支持自定义斜杠命令的平台使用
-.claude-plugin/plugin.json     # Claude 插件元数据
+In a Claude plugin, commands are namespaced, for example `/strategic-opportunity-insight:four-views`. In Codex, invoke `$strategy-insight` and name the workflow you want. The fifth installable skill, `strategy-insight`, is the shared entry point for all four workflows.
+
+### Examples
+
+Standalone research:
+
+> Use `$strategy-customers` to study the pain points and willingness to pay of small restaurant operators looking for digital tools.
+
+> Use `$strategy-competitors` to map the main players and alternatives in China's veterinary software market.
+
+Guided workflow in Codex:
+
+> Use `$strategy-insight` to find opportunities in digital services for small restaurants.
+
+> Use `$strategy-insight` to compare these three directions and identify which ones merit validation first.
+
+Guided workflow as a Claude plugin:
+
+> `/strategic-opportunity-insight:four-views China's veterinary care market`
+
+> `/strategic-opportunity-insight:strategy-insight China's veterinary care market`
+
+## Installation
+
+Choose one of two paths. The **Claude Code plugin** installs the full set of skills and slash commands as a managed package. **skills.sh** lets you select skills for Codex, Claude Code, or another agent. If you use the Claude plugin, do not also install the same skills through skills.sh.
+
+### Claude Code: install the full plugin
+
+Add this GitHub repository as a plugin source, then install the plugin:
+
+```bash
+claude plugin marketplace add tea-del/strategic-opportunity-insight
+claude plugin install strategic-opportunity-insight@strategic-opportunity-insight-marketplace
 ```
 
-- **ChatGPT/Codex Skills**：安装 `skills/` 下需要的目录；通过技能名或自然语言调用。组合工作流用 `strategy-insight`。
-- **Claude Code/Cowork**：可使用 `commands/` 中的四个命令，命令调用同一套技能；也可以直接调用四个“看”。
-- **Gemini CLI、OpenCode、Cursor、Kiro 等支持 Agent Skills 的工具**：复制对应的 `skills/` 目录，按其平台方式调用；不支持 `commands/` 时直接调用 `strategy-insight` 并说明模式。
-- **不自动识别 Skills 的聊天界面**：将需要的 `SKILL.md` 和其引用资料加入项目知识或指令，按同样的模式提问。此方式不提供自动技能发现。
+After installation, use a standalone skill or start a guided workflow with a command such as `/strategic-opportunity-insight:four-views`. In Claude Cowork, you can add the same repository from the plugin UI.
 
-调研需要联网搜索和网页阅读。没有这些能力时，可以整理用户提供的材料，但不能把未经验证的市场事实写成已完成的行业研究。HTML矩阵模板不依赖外部图表CDN，离线也可打开。
+### Codex and other agents: choose the skills you need
 
-## 来源与许可
+```bash
+npx skills@latest add tea-del/strategic-opportunity-insight
+```
 
-这版沿用本仓库原有的“五看”、30–50个候选到15–25个深描、双维独立评分、明星区四项落地验证及11份交付物。原版单文件说明已由模块化技能替代。[方法指南](guide.html) 继续保留。项目许可证见 [LICENSE](LICENSE)。
+The installer asks which skills and agent to use, and whether to install at project or user level. Select one Four Views skill for standalone research, `strategy-insight` for guided workflows, or all five for the full set.
+
+skills.sh installs skill files, not the Claude plugin's slash commands. In Codex, invoke `$strategy-insight` and specify “four-views”, “find-opportunities”, “compare-opportunities”, or “strategy-insight”.
+
+These commands target local agents; they do not install a skill into a standard ChatGPT web conversation.
+
+## Scope
+
+This project covers the Five Views—strategic insight—not the subsequent strategic decisions (control points, goals, and strategy). Research findings should include sources and dates; estimates should not be presented as verified facts. Licensed under [Apache-2.0](LICENSE).
